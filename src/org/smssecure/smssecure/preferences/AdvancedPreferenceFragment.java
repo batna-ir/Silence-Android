@@ -28,8 +28,8 @@ public class AdvancedPreferenceFragment extends ListSummaryPreferenceFragment {
   public void onCreate(Bundle paramBundle) {
     super.onCreate(paramBundle);
 
-    this.findPreference(SUBMIT_DEBUG_LOG_PREF)
-      .setOnPreferenceClickListener(new SubmitDebugLogListener());
+//    this.findPreference(SUBMIT_DEBUG_LOG_PREF)
+//      .setOnPreferenceClickListener(new SubmitDebugLogListener());
 
     this.findPreference(SilencePreferences.ENTER_KEY_TYPE).setOnPreferenceChangeListener(new ListSummaryListener());
     initializeListSummary((ListPreference) this.findPreference(SilencePreferences.ENTER_KEY_TYPE));

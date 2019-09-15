@@ -182,7 +182,7 @@ public class ApplicationPreferencesActivity extends PassphraseRequiredActionBarA
 
     private void handlePrivacyPolicy() {
       try {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://silence.im/privacy")));
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.sabaos.com/legal")));
       } catch (ActivityNotFoundException e) {
         Toast.makeText(((ApplicationPreferencesActivity) getActivity()).getApplicationContext(), R.string.ConversationActivity_cant_open_link, Toast.LENGTH_LONG).show();
       }

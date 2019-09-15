@@ -36,7 +36,7 @@
   <string name="ApplicationPreferencesActivity_mms">ام‌ام‌اس</string>
   <string name="ApplicationPreferencesActivity_incoming_summary">‫%s وارده</string>
   <string name="ApplicationPreferencesActivity_privacy_summary">عبارت عبور %1$s، امنیت صفحه %2$s</string>
-  <string name="ApplicationPreferencesActivity_appearance_summary">زمینه%1$s، زبان %2$s</string>
+  <string name="ApplicationPreferencesActivity_appearance_summary">زمینه %1$s، زبان %2$s</string>
   <!--AppProtectionPreferenceFragment-->
   <plurals name="AppProtectionPreferenceFragment_minutes">
     <item quantity="one">‫%d دقیقه</item>

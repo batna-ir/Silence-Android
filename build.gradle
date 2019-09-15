@@ -150,6 +150,18 @@ android {
         release
     }
 
+    productFlavors{
+
+        flavorDimensions "free"
+        saba{
+            applicationId "com.sabaos.secureSMS"
+            dimension "free"
+        }
+        generic{
+            dimension "free"
+        }
+    }
+
     buildTypes {
         debug {
             minifyEnabled true
