@@ -760,5 +760,14 @@
     <string name="trimmer__old_messages_successfully_deleted">پیام های قدیمی با موفقیت پاک شدند</string>
     <!--transport_selection_list_item-->
     <string name="transport_selection_list_item__transport_icon">آیکون انتقال</string>
+
+    <string name="WelcomeActivity_improve_your_privacy_talk_to_everyone">با حریم خصوصی امن، با همه صحبت کنید</string>
+    <string name="WelcomeActivity_encrypt_your_messages">پیام های خود را با کاربران پیامک امن رمزنگاری کنید، در حالی که می توانید به دیگران پیام های عادی ارسال کنید.</string>
+    <string name="WelcomeActivity_continue">ادامه</string>
+    <string name="WelcomeActivity_silence_needs_access_to_your_contacts_phone_status_and_sms">پیامک امن نیاز به دسترسی به مخاطبین شما دارد، وضعیت تلفن و پیام ها به منظور ارتباط با دوستان ، مدیریت کلیدهای رمزگذاری و گپ دارد.</string>
+    <string name="Permissions_permission_required">مجوز لازم است</string>
+    <string name="Permissions_continue">ادامه</string>
+    <string name="Permissions_not_now">الان نه</string>
+
     <!--EOF-->
 </resources>
