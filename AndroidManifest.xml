@@ -38,7 +38,7 @@
 
     <application android:name=".ApplicationContext"
                  android:icon="@mipmap/ic_launcher_saba"
-                 android:roundIcon="@mipmap/ic_launcher_saba_round"
+                 android:roundIcon="@mipmap/ic_launcher_saba"
                  android:label="@string/app_name"
                  android:supportsRtl="true"
                  tools:replace="android:allowBackup"
