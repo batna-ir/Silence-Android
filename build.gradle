@@ -124,7 +124,7 @@ android {
 
     defaultConfig {
         versionCode 980708
-        versionName "Mehr.98.b"
+        versionName "Mehr.98.c"
 
         minSdkVersion 14
         targetSdkVersion 26
