@@ -54,26 +54,37 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
 
   @Override
   protected void onPreCreate() {
-    dynamicTheme.onCreate(this);
-    dynamicLanguage.onCreate(this);
+    try {
+      dynamicTheme.onCreate(this);
+      dynamicLanguage.onCreate(this);
+    }catch (Exception e){
+
+    }
   }
 
   @Override
   protected void onCreate(Bundle icicle, @NonNull MasterSecret masterSecret) {
-    this.masterSecret = masterSecret;
+    try {
+      this.masterSecret = masterSecret;
+      getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
+      getSupportActionBar().setTitle(R.string.app_name);
+      fragment = initFragment(android.R.id.content, new ConversationListFragment(), masterSecret, dynamicLanguage.getCurrentLocale());
+      initializeContactUpdatesReceiver();
 
-    getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
-    getSupportActionBar().setTitle(R.string.app_name);
-    fragment = initFragment(android.R.id.content, new ConversationListFragment(), masterSecret, dynamicLanguage.getCurrentLocale());
+    } catch (Exception e) {
 
-    initializeContactUpdatesReceiver();
+    }
   }
 
   @Override
   public void onResume() {
-    super.onResume();
-    dynamicTheme.onResume(this);
-    dynamicLanguage.onResume(this);
+    try {
+      super.onResume();
+      dynamicTheme.onResume(this);
+      dynamicLanguage.onResume(this);
+    }catch (Exception e){
+
+    }
   }
 
   @Override

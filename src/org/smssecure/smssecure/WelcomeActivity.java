@@ -31,17 +31,21 @@ public class WelcomeActivity extends BaseActionBarActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    context = (Context)WelcomeActivity.this;
+    try {
+        context = (Context) WelcomeActivity.this;
+        setStatusBarColor();
 
-    setStatusBarColor();
+        if (SilencePreferences.isFirstRun(context)) {
+            setContentView(R.layout.welcome_activity);
+            findViewById(R.id.welcome_continue_button).setOnClickListener(v -> onContinueClicked());
+        } else {
+            setContentView(R.layout.welcome_activity_missing_perms);
+            findViewById(R.id.welcome_continue_button).setOnClickListener(v -> onContinueMissingPermsClicked());
+        }
+    }catch (Exception e) {
 
-    if (SilencePreferences.isFirstRun(context)) {
-      setContentView(R.layout.welcome_activity);
-      findViewById(R.id.welcome_continue_button).setOnClickListener(v -> onContinueClicked());
-    } else {
-      setContentView(R.layout.welcome_activity_missing_perms);
-      findViewById(R.id.welcome_continue_button).setOnClickListener(v -> onContinueMissingPermsClicked());
     }
+
   }
 
   @Override
