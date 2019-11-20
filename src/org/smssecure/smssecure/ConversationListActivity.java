@@ -16,6 +16,7 @@
  */
 package org.smssecure.smssecure;
 
+import android.Manifest;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.os.AsyncTask;
@@ -33,6 +34,7 @@ import android.view.MenuItem;
 import org.smssecure.smssecure.crypto.MasterSecret;
 import org.smssecure.smssecure.database.DatabaseFactory;
 import org.smssecure.smssecure.notifications.MessageNotifier;
+import org.smssecure.smssecure.permissions.Permissions;
 import org.smssecure.smssecure.recipients.RecipientFactory;
 import org.smssecure.smssecure.recipients.Recipients;
 import org.smssecure.smssecure.service.KeyCachingService;
@@ -54,16 +56,14 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
 
   @Override
   protected void onPreCreate() {
-    try {
+
       dynamicTheme.onCreate(this);
       dynamicLanguage.onCreate(this);
-    }catch (Exception e){
-
-    }
   }
 
   @Override
   protected void onCreate(Bundle icicle, @NonNull MasterSecret masterSecret) {
+    //javad
     try {
       this.masterSecret = masterSecret;
       getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
@@ -72,19 +72,24 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
       initializeContactUpdatesReceiver();
 
     } catch (Exception e) {
-
+      Permissions.with(this)
+              .request(android.Manifest.permission.READ_PHONE_STATE,
+                      android.Manifest.permission.READ_CONTACTS,
+                      android.Manifest.permission.RECEIVE_SMS,
+                      Manifest.permission.RECEIVE_MMS)
+              .ifNecessary()
+              .withPermanentDenialDialog(getString(R.string.WelcomeActivity_silence_requires_the_phone_and_sms_permissions_in_order_to_work_but_it_has_been_permanently_denied))
+              .onSomeGranted((permissions) -> {
+              })
+              .execute();
     }
   }
 
   @Override
   public void onResume() {
-    try {
       super.onResume();
       dynamicTheme.onResume(this);
       dynamicLanguage.onResume(this);
-    }catch (Exception e){
-
-    }
   }
 
   @Override
@@ -238,7 +243,6 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
       }
     };
 
-    getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI,
-                                                 true, observer);
+    getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI,true, observer);
   }
 }

@@ -31,21 +31,21 @@ public class WelcomeActivity extends BaseActionBarActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    try {
+
         context = (Context) WelcomeActivity.this;
         setStatusBarColor();
-
         if (SilencePreferences.isFirstRun(context)) {
             setContentView(R.layout.welcome_activity);
-            findViewById(R.id.welcome_continue_button).setOnClickListener(v -> onContinueClicked());
-        } else {
-            setContentView(R.layout.welcome_activity_missing_perms);
-            findViewById(R.id.welcome_continue_button).setOnClickListener(v -> onContinueMissingPermsClicked());
+            findViewById(R.id.welcome_continue_button).setOnClickListener(v -> {
+                onContinueClicked();
+            });
         }
-    }catch (Exception e) {
-
-    }
-
+        else {
+            setContentView(R.layout.welcome_activity_missing_perms);
+            findViewById(R.id.welcome_continue_button).setOnClickListener(v -> {
+                onContinueMissingPermsClicked();
+            });
+        }
   }
 
   @Override
@@ -75,8 +75,10 @@ public class WelcomeActivity extends BaseActionBarActivity {
   }
 
   private void onContinueMissingPermsClicked() {
+
     Permissions.with(this)
                .request(Manifest.permission.READ_PHONE_STATE,
+                       Manifest.permission.READ_CONTACTS, //javad
                         Manifest.permission.RECEIVE_SMS,
                         Manifest.permission.RECEIVE_MMS)
                .ifNecessary()
