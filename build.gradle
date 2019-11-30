@@ -123,8 +123,8 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        versionCode 980708
-        versionName "Mehr.98.c"
+        versionCode 9809091
+        versionName "Azar98-A"
 
         minSdkVersion 14
         targetSdkVersion 26
