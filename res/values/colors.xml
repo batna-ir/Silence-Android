@@ -1,5 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+
+<!--    launcher Icon-->
+    <color name="launcher_icon_color_background">#FF9900</color>
+    <color name="launcher_icon_color_foreground">#FFCC00</color>
+
     <color name="silence_primary">#ff2090ea</color>
     <color name="silence_primary_dark">#ff1c7ac5</color>
     <color name="silence_primary_alpha33">#552090ea</color>
