@@ -49,6 +49,9 @@ public class AutoInitiate {
       Log.w(TAG, "Couldn't get number type (country: " + Locale.getDefault().getCountry() + ")");
       return false;
     }
+    catch (IllegalStateException e) {
+      return false;
+    }
   }
 
   public static boolean isTagged(String message) {
