@@ -768,6 +768,8 @@
     <string name="Permissions_permission_required">مجوز لازم است</string>
     <string name="Permissions_continue">ادامه</string>
     <string name="Permissions_not_now">الان نه</string>
+    <string name="reconfiguring_app">در حال پیکربندی مجدد&#8230; \n لطفا صبور باشید </string>
+
 
     <!--EOF-->
 </resources>

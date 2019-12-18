@@ -17,6 +17,7 @@
 package org.smssecure.smssecure;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.os.AsyncTask;
@@ -24,6 +25,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
@@ -42,6 +44,8 @@ import org.smssecure.smssecure.util.DynamicLanguage;
 import org.smssecure.smssecure.util.DynamicTheme;
 import org.smssecure.smssecure.util.SilencePreferences;
 
+import saba.AppManager;
+
 public class ConversationListActivity extends PassphraseRequiredActionBarActivity
     implements ConversationListFragment.ConversationSelectedListener
 {
@@ -53,18 +57,25 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
   private ConversationListFragment fragment;
   private ContentObserver observer;
   private MasterSecret masterSecret;
+  public static Context globalContext;
+  public static AppCompatActivity appCompatActivity;
 
   @Override
   protected void onPreCreate() {
 
+    try {
       dynamicTheme.onCreate(this);
       dynamicLanguage.onCreate(this);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
   protected void onCreate(Bundle icicle, @NonNull MasterSecret masterSecret) {
-    //javad
     try {
+      globalContext = getApplicationContext();
+      appCompatActivity = this;
       this.masterSecret = masterSecret;
       getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
       getSupportActionBar().setTitle(R.string.app_name);
@@ -72,24 +83,34 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
       initializeContactUpdatesReceiver();
 
     } catch (Exception e) {
-      Permissions.with(this)
-              .request(android.Manifest.permission.READ_PHONE_STATE,
-                      android.Manifest.permission.READ_CONTACTS,
-                      android.Manifest.permission.RECEIVE_SMS,
-                      Manifest.permission.RECEIVE_MMS)
-              .ifNecessary()
-              .withPermanentDenialDialog(getString(R.string.WelcomeActivity_silence_requires_the_phone_and_sms_permissions_in_order_to_work_but_it_has_been_permanently_denied))
-              .onSomeGranted((permissions) -> {
-              })
-              .execute();
+      try {
+        Permissions.with(this)
+                .request(Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.RECEIVE_SMS,
+                        Manifest.permission.RECEIVE_MMS)
+                .ifNecessary()
+                .withPermanentDenialDialog(getString(R.string.WelcomeActivity_silence_requires_the_phone_and_sms_permissions_in_order_to_work_but_it_has_been_permanently_denied))
+                .onSomeGranted((permissions) -> {
+                })
+                .execute();
+      } catch (Exception ex) {
+        ex.printStackTrace();
+        AppManager.clearData(globalContext, appCompatActivity);
+      }
     }
   }
 
   @Override
   public void onResume() {
+    try {
       super.onResume();
       dynamicTheme.onResume(this);
       dynamicLanguage.onResume(this);
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
+    }
   }
 
   @Override
@@ -171,26 +192,41 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
 
   @Override
   public void onCreateConversation(long threadId, Recipients recipients, int distributionType, long lastSeen) {
-    Intent intent = new Intent(this, ConversationActivity.class);
-    intent.putExtra(ConversationActivity.RECIPIENTS_EXTRA, recipients.getIds());
-    intent.putExtra(ConversationActivity.THREAD_ID_EXTRA, threadId);
-    intent.putExtra(ConversationActivity.DISTRIBUTION_TYPE_EXTRA, distributionType);
-    intent.putExtra(ConversationActivity.TIMING_EXTRA, System.currentTimeMillis());
-    intent.putExtra(ConversationActivity.LAST_SEEN_EXTRA, lastSeen);
+    try {
+      Intent intent = new Intent(this, ConversationActivity.class);
+      intent.putExtra(ConversationActivity.RECIPIENTS_EXTRA, recipients.getIds());
+      intent.putExtra(ConversationActivity.THREAD_ID_EXTRA, threadId);
+      intent.putExtra(ConversationActivity.DISTRIBUTION_TYPE_EXTRA, distributionType);
+      intent.putExtra(ConversationActivity.TIMING_EXTRA, System.currentTimeMillis());
+      intent.putExtra(ConversationActivity.LAST_SEEN_EXTRA, lastSeen);
 
-    startActivity(intent);
-    overridePendingTransition(R.anim.slide_from_right, R.anim.fade_scale_out);
+      startActivity(intent);
+      overridePendingTransition(R.anim.slide_from_right, R.anim.fade_scale_out);
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
+    }
   }
 
   @Override
   public void onSwitchToArchive() {
-    Intent intent = new Intent(this, ConversationListArchiveActivity.class);
-    startActivity(intent);
+    try {
+      Intent intent = new Intent(this, ConversationListArchiveActivity.class);
+      startActivity(intent);
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
+    }
   }
 
   private void createGroup() {
-    Intent intent = new Intent(this, GroupCreateActivity.class);
-    startActivity(intent);
+    try {
+      Intent intent = new Intent(this, GroupCreateActivity.class);
+      startActivity(intent);
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
+    }
   }
 
   private void handleSwitchToArchive() {
@@ -203,46 +239,73 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
   }
 
   private void handleClearPassphrase() {
-    Intent intent = new Intent(this, KeyCachingService.class);
-    intent.setAction(KeyCachingService.CLEAR_KEY_ACTION);
-    startService(intent);
+    try {
+      Intent intent = new Intent(this, KeyCachingService.class);
+      intent.setAction(KeyCachingService.CLEAR_KEY_ACTION);
+      startService(intent);
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
+    }
   }
 
   private void handleImportExport() {
-    startActivity(new Intent(this, ImportExportActivity.class));
+    try {
+      startActivity(new Intent(this, ImportExportActivity.class));
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
+    }
   }
 
   private void handleMyIdentity() {
-    startActivity(new Intent(this, ViewLocalIdentityActivity.class));
+    try {
+      startActivity(new Intent(this, ViewLocalIdentityActivity.class));
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
+    }
   }
 
   private void handleMarkAllRead() {
     new AsyncTask<Void, Void, Void>() {
       @Override
       protected Void doInBackground(Void... params) {
-        DatabaseFactory.getThreadDatabase(ConversationListActivity.this).setAllThreadsRead();
-        MessageNotifier.updateNotification(ConversationListActivity.this, masterSecret);
+        try {
+          DatabaseFactory.getThreadDatabase(ConversationListActivity.this).setAllThreadsRead();
+          MessageNotifier.updateNotification(ConversationListActivity.this, masterSecret);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
         return null;
       }
     }.execute();
   }
 
   private void initializeContactUpdatesReceiver() {
-    observer = new ContentObserver(null) {
-      @Override
-      public void onChange(boolean selfChange) {
-        super.onChange(selfChange);
-        Log.w(TAG, "Detected android contact data changed, refreshing cache");
-        RecipientFactory.clearCache();
-        ConversationListActivity.this.runOnUiThread(new Runnable() {
-          @Override
-          public void run() {
-            fragment.getListAdapter().notifyDataSetChanged();
-          }
-        });
-      }
-    };
-
-    getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI,true, observer);
+    try {
+      observer = new ContentObserver(null) {
+        @Override
+        public void onChange(boolean selfChange) {
+          super.onChange(selfChange);
+          Log.w(TAG, "Detected android contact data changed, refreshing cache");
+          RecipientFactory.clearCache();
+          ConversationListActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+              try {
+                fragment.getListAdapter().notifyDataSetChanged();
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
+            }
+          });
+        }
+      };
+      getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI,true, observer);
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
+    }
   }
 }

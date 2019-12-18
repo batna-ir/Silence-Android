@@ -928,6 +928,7 @@
     <string name="Permissions_permission_required">Permission required</string>
     <string name="Permissions_continue">Continue</string>
     <string name="Permissions_not_now">Not now</string>
+    <string name="reconfiguring_app">reconfiguring app&#8230; \n please wait </string>
 
     <!-- EOF -->
 

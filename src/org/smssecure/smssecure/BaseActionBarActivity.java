@@ -1,6 +1,5 @@
 package org.smssecure.smssecure;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,11 +12,15 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
-import android.view.animation.AnimationUtils;
 
 import org.smssecure.smssecure.util.SilencePreferences;
 
 import java.lang.reflect.Field;
+
+import saba.AppManager;
+
+import static org.smssecure.smssecure.ConversationListActivity.appCompatActivity;
+import static org.smssecure.smssecure.ConversationListActivity.globalContext;
 
 
 public abstract class BaseActionBarActivity extends AppCompatActivity {
@@ -52,12 +55,17 @@ public abstract class BaseActionBarActivity extends AppCompatActivity {
   }
 
   private void initializeScreenshotSecurity() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH &&
-            SilencePreferences.isScreenSecurityEnabled(this))
-    {
-      getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
-    } else {
-      getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+    try {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH &&
+              SilencePreferences.isScreenSecurityEnabled(this))
+      {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+      } else {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
     }
   }
 
@@ -76,12 +84,19 @@ public abstract class BaseActionBarActivity extends AppCompatActivity {
       Log.w(TAG, "Failed to force overflow menu.");
     } catch (NoSuchFieldException e) {
       Log.w(TAG, "Failed to force overflow menu.");
+    } catch (Exception e) {
+      AppManager.clearData(globalContext, appCompatActivity);
     }
   }
 
   protected void startActivitySceneTransition(Intent intent, View sharedView, String transitionName) {
-    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedView, transitionName)
-                                         .toBundle();
-    ActivityCompat.startActivity(this, intent, bundle);
+    try {
+      Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedView, transitionName)
+                                           .toBundle();
+      ActivityCompat.startActivity(this, intent, bundle);
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
+    }
   }
 }

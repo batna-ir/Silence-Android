@@ -4,23 +4,25 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.WindowManager;
 
 import org.smssecure.smssecure.crypto.MasterSecret;
 import org.smssecure.smssecure.crypto.MasterSecretUtil;
 import org.smssecure.smssecure.service.KeyCachingService;
 import org.smssecure.smssecure.util.SilencePreferences;
 import org.smssecure.smssecure.util.Util;
-import org.smssecure.smssecure.WelcomeActivity;
 
 import java.util.Locale;
+
+import saba.AppManager;
+
+import static org.smssecure.smssecure.ConversationListActivity.appCompatActivity;
+import static org.smssecure.smssecure.ConversationListActivity.globalContext;
 
 public abstract class PassphraseRequiredActionBarActivity extends BaseActionBarActivity implements MasterSecretListener {
   private static final String TAG = PassphraseRequiredActionBarActivity.class.getSimpleName();
@@ -38,14 +40,19 @@ public abstract class PassphraseRequiredActionBarActivity extends BaseActionBarA
 
   @Override
   protected final void onCreate(Bundle savedInstanceState) {
-    Log.w(TAG, "onCreate(" + savedInstanceState + ")");
-    onPreCreate();
-    final MasterSecret masterSecret = KeyCachingService.getMasterSecret(this);
-    routeApplicationState(masterSecret);
-    super.onCreate(savedInstanceState);
-    if (!isFinishing()) {
-      initializeClearKeyReceiver();
-      onCreate(savedInstanceState, masterSecret);
+    try {
+      Log.w(TAG, "onCreate(" + savedInstanceState + ")");
+      onPreCreate();
+      final MasterSecret masterSecret = KeyCachingService.getMasterSecret(this);
+      routeApplicationState(masterSecret);
+      super.onCreate(savedInstanceState);
+      if (!isFinishing()) {
+        initializeClearKeyReceiver();
+        onCreate(savedInstanceState, masterSecret);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
     }
   }
 
@@ -78,8 +85,13 @@ public abstract class PassphraseRequiredActionBarActivity extends BaseActionBarA
   @Override
   public void onMasterSecretCleared() {
     Log.w(TAG, "onMasterSecretCleared()");
-    if (isVisible) routeApplicationState(null);
-    else           finish();
+    try {
+      if (isVisible) routeApplicationState(null);
+      else           finish();
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
+    }
   }
 
   protected <T extends Fragment> T initFragment(@IdRes int target,

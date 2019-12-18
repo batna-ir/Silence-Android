@@ -81,24 +81,36 @@ public class ApplicationContext extends Application implements DependencyInjecto
   }
 
   private void initializeRandomNumberFix() {
-    PRNGFixes.apply();
+    try {
+      PRNGFixes.apply();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   private void initializeLogging() {
-    SignalProtocolLoggerProvider.setProvider(new AndroidSignalProtocolLogger());
+    try {
+      SignalProtocolLoggerProvider.setProvider(new AndroidSignalProtocolLogger());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   private void initializeJobManager() {
-    this.jobManager = JobManager.newBuilder(this)
-                                .withName("SilenceJobs")
-                                .withDependencyInjector(this)
-                                .withJobSerializer(new EncryptingJobSerializer())
-                                .withRequirementProviders(new MasterSecretRequirementProvider(this),
-                                                          new ServiceRequirementProvider(this),
-                                                          new NetworkRequirementProvider(this),
-                                                          mediaNetworkRequirementProvider)
-                                .withConsumerThreads(5)
-                                .build();
+    try {
+      this.jobManager = JobManager.newBuilder(this)
+                                  .withName("SilenceJobs")
+                                  .withDependencyInjector(this)
+                                  .withJobSerializer(new EncryptingJobSerializer())
+                                  .withRequirementProviders(new MasterSecretRequirementProvider(this),
+                                                            new ServiceRequirementProvider(this),
+                                                            new NetworkRequirementProvider(this),
+                                                            mediaNetworkRequirementProvider)
+                                  .withConsumerThreads(5)
+                                  .build();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public void notifyMediaControlEvent() {
