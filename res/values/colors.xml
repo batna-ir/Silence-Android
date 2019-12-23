@@ -5,8 +5,8 @@
     <color name="launcher_icon_color_background">#FF9900</color>
     <color name="launcher_icon_color_foreground">#FFCC00</color>
 
-    <color name="silence_primary">#ff2090ea</color>
-    <color name="silence_primary_dark">#ff1c7ac5</color>
+    <color name="silence_primary">#ffc40d</color>
+    <color name="silence_primary_dark">#e3a21a</color>
     <color name="silence_primary_alpha33">#552090ea</color>
     <color name="silence_primary_alpha_focus">#882090ea</color>
 
