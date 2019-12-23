@@ -1,15 +1,20 @@
 package org.smssecure.smssecure;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CountrySelectionActivity extends BaseActivity
     implements CountrySelectionFragment.CountrySelectedListener
 
 {
-
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
   @Override
   public void onCreate(Bundle bundle) {
     super.onCreate(bundle);

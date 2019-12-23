@@ -1,5 +1,6 @@
 package org.smssecure.smssecure;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
@@ -12,13 +13,14 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 
 import org.smssecure.smssecure.crypto.MasterSecret;
 import org.smssecure.smssecure.util.concurrent.ListenableFuture;
 
 import java.util.concurrent.ExecutionException;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ConversationPopupActivity extends ConversationActivity {
 
@@ -29,7 +31,10 @@ public class ConversationPopupActivity extends ConversationActivity {
     super.onPreCreate();
     overridePendingTransition(R.anim.slide_from_top, R.anim.slide_to_top);
   }
-
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
   @Override
   protected void onCreate(Bundle bundle, @NonNull MasterSecret masterSecret) {
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,

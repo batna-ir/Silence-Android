@@ -21,8 +21,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:typeface="monospace"
-                android:fontFamily="monospace"
                 android:id="@+id/friend_reads"
                 android:text=""
                 android:layout_marginBottom="8dp" />
@@ -41,8 +39,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/you_read"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:typeface="monospace"
-                android:fontFamily="monospace"
+
                 android:text="" />
 
     </LinearLayout>

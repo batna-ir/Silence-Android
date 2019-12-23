@@ -52,6 +52,8 @@ import org.smssecure.smssecure.util.task.ProgressDialogAsyncTask;
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 /**
  * Activity for displaying media attachments in-app
  */
@@ -76,7 +78,10 @@ public class MediaOverviewActivity extends PassphraseRequiredActionBarActivity i
     this.setTheme(R.style.Silence_DarkTheme);
     dynamicLanguage.onCreate(this);
   }
-
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
   @Override
   protected void onCreate(Bundle bundle, @NonNull MasterSecret masterSecret) {
     this.masterSecret = masterSecret;

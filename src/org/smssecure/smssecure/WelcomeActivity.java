@@ -1,10 +1,9 @@
 package org.smssecure.smssecure;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.Manifest;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -12,13 +11,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 
-import org.smssecure.smssecure.BaseActionBarActivity;
 import org.smssecure.smssecure.notifications.NotificationChannels;
-import org.smssecure.smssecure.R;
 import org.smssecure.smssecure.permissions.Permissions;
 import org.smssecure.smssecure.util.ServiceUtil;
 import org.smssecure.smssecure.util.SilencePreferences;
 import org.smssecure.smssecure.util.Util;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class WelcomeActivity extends BaseActionBarActivity {
 
@@ -27,7 +26,10 @@ public class WelcomeActivity extends BaseActionBarActivity {
   private static final int NOTIFICATION_ID = 1339;
 
   private Context context;
-
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

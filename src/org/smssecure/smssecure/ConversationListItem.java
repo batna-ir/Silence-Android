@@ -31,9 +31,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.smssecure.smssecure.components.AlertView;
 import org.smssecure.smssecure.components.AvatarImageView;
 import org.smssecure.smssecure.components.DeliveryStatusView;
-import org.smssecure.smssecure.components.AlertView;
 import org.smssecure.smssecure.components.FromTextView;
 import org.smssecure.smssecure.components.ThumbnailView;
 import org.smssecure.smssecure.crypto.MasterSecret;
@@ -61,8 +61,8 @@ public class ConversationListItem extends RelativeLayout
 {
   private final static String TAG = ConversationListItem.class.getSimpleName();
 
-  private final static Typeface BOLD_TYPEFACE  = Typeface.create("sans-serif", Typeface.BOLD);
-  private final static Typeface LIGHT_TYPEFACE = Typeface.create("sans-serif-light", Typeface.NORMAL);
+  private final static Typeface BOLD_TYPEFACE  = Typeface.create("@font/shabnam", Typeface.BOLD);
+  private final static Typeface LIGHT_TYPEFACE = Typeface.create("@font/shabnam", Typeface.NORMAL);
 
   private Set<Long>          selectedThreads;
   private Recipients         recipients;

@@ -384,7 +384,7 @@
   <string name="change_passphrase_activity__new_passphrase">عبارت عبور جدید</string>
   <string name="change_passphrase_activity__repeat_new_passphrase">تکرار عبارت عبور جدید</string>
   <!--contact_selection_activity-->
-  <string name="contact_selection_activity__enter_name_or_number">یک نام یا شماره وارد وارد کنید</string>
+  <string name="contact_selection_activity__enter_name_or_number">یک نام یا شماره وارد کنید</string>
   <!--contact_selection_group_activity-->
   <string name="contact_selection_group_activity__no_contacts">هیچ مخاطبی وجود ندارد.</string>
   <string name="contact_selection_group_activity__finding_contacts">بارگذاری مخاطبان...</string>

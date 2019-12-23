@@ -1,13 +1,20 @@
 
 package org.smssecure.smssecure;
 
-import android.content.Intent;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class ExitActivity extends Activity {
 
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

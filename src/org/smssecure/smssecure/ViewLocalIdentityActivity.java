@@ -17,15 +17,18 @@
  */
 package org.smssecure.smssecure;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import org.smssecure.smssecure.crypto.IdentityKeyUtil;
 import org.smssecure.smssecure.crypto.IdentityKeyParcelable;
+import org.smssecure.smssecure.crypto.IdentityKeyUtil;
 import org.smssecure.smssecure.crypto.MasterSecret;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Activity that displays the local identity key and offers the option to regenerate it.
@@ -33,6 +36,11 @@ import org.smssecure.smssecure.crypto.MasterSecret;
  * @author Moxie Marlinspike
  */
 public class ViewLocalIdentityActivity extends ViewIdentityActivity {
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
 
   @Override
   protected void onCreate(Bundle icicle, @NonNull MasterSecret masterSecret) {

@@ -16,43 +16,35 @@
  */
 package org.smssecure.smssecure;
 
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build.VERSION;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.preference.Preference;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.smssecure.smssecure.crypto.MasterSecret;
 import org.smssecure.smssecure.preferences.AdvancedPreferenceFragment;
 import org.smssecure.smssecure.preferences.AppProtectionPreferenceFragment;
 import org.smssecure.smssecure.preferences.AppearancePreferenceFragment;
+import org.smssecure.smssecure.preferences.ChatsPreferenceFragment;
 import org.smssecure.smssecure.preferences.CorrectedPreferenceFragment;
 import org.smssecure.smssecure.preferences.NotificationsPreferenceFragment;
 import org.smssecure.smssecure.preferences.SmsMmsPreferenceFragment;
-import org.smssecure.smssecure.preferences.ChatsPreferenceFragment;
 import org.smssecure.smssecure.service.KeyCachingService;
-import org.smssecure.smssecure.util.Dialogs;
 import org.smssecure.smssecure.util.DynamicLanguage;
 import org.smssecure.smssecure.util.DynamicTheme;
-import org.smssecure.smssecure.util.task.ProgressDialogAsyncTask;
-import org.smssecure.smssecure.util.ResUtil;
 import org.smssecure.smssecure.util.SilencePreferences;
-import org.whispersystems.libsignal.util.guava.Optional;
 
-import java.io.IOException;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * The Activity for application preference display and management.
@@ -84,6 +76,12 @@ public class ApplicationPreferencesActivity extends PassphraseRequiredActionBarA
   protected void onPreCreate() {
     dynamicTheme.onCreate(this);
     dynamicLanguage.onCreate(this);
+  }
+
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
   }
 
   @Override

@@ -29,7 +29,6 @@
         <TextView android:id="@+id/reminder_text"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:fontFamily="sans-serif-light"
                   android:textColor="@color/white"
                   android:textSize="14sp"
                   tools:text="@string/reminder_header_push_text" />
@@ -40,7 +39,6 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:textSize="16sp"
-              android:fontFamily="sans-serif-medium"
               android:paddingLeft="6dp"
               android:paddingRight="6dp"
               android:paddingTop="8dp"
@@ -53,7 +51,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:textSize="16sp"
-              android:fontFamily="sans-serif-medium"
+
               android:paddingLeft="6dp"
               android:paddingRight="6dp"
               android:paddingTop="8dp"

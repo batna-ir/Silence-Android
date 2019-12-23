@@ -29,25 +29,23 @@ import android.widget.ProgressBar;
 import org.smssecure.smssecure.crypto.IdentityKeyUtil;
 import org.smssecure.smssecure.crypto.MasterSecret;
 import org.smssecure.smssecure.database.DatabaseFactory;
-import org.smssecure.smssecure.database.MmsDatabase;
-import org.smssecure.smssecure.database.MmsDatabase.Reader;
 import org.smssecure.smssecure.database.EncryptingSmsDatabase;
-import org.smssecure.smssecure.database.model.MessageRecord;
 import org.smssecure.smssecure.database.SmsDatabase;
 import org.smssecure.smssecure.database.model.SmsMessageRecord;
 import org.smssecure.smssecure.jobs.SmsDecryptJob;
 import org.smssecure.smssecure.notifications.MessageNotifier;
-import org.smssecure.smssecure.util.dualsim.SubscriptionManagerCompat;
 import org.smssecure.smssecure.util.ParcelUtil;
 import org.smssecure.smssecure.util.SilencePreferences;
 import org.smssecure.smssecure.util.Util;
 import org.smssecure.smssecure.util.VersionTracker;
+import org.smssecure.smssecure.util.dualsim.SubscriptionManagerCompat;
 import org.whispersystems.jobqueue.EncryptionKeys;
 
 import java.io.File;
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DatabaseUpgradeActivity extends BaseActivity {
   private static final String TAG = DatabaseUpgradeActivity.class.getSimpleName();
@@ -74,6 +72,11 @@ public class DatabaseUpgradeActivity extends BaseActivity {
   }};
 
   private MasterSecret masterSecret;
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
 
   @Override
   public void onCreate(Bundle bundle) {

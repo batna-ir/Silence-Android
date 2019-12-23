@@ -16,14 +16,13 @@
  */
 package org.smssecure.smssecure;
 
+import android.content.Context;
 import android.graphics.Rect;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.TouchDelegate;
 import android.view.View;
 import android.widget.EditText;
@@ -37,7 +36,7 @@ import org.smssecure.smssecure.util.DynamicNoActionBarTheme;
 import org.smssecure.smssecure.util.DynamicTheme;
 import org.smssecure.smssecure.util.ServiceUtil;
 
-import java.io.IOException;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Base activity container for selecting a list of contacts.
@@ -70,7 +69,10 @@ public abstract class ContactSelectionActivity extends PassphraseRequiredActionB
     dynamicTheme.onCreate(this);
     dynamicLanguage.onCreate(this);
   }
-
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
   @Override
   protected void onCreate(Bundle icicle, MasterSecret masterSecret) {
     setContentView(R.layout.contact_selection_activity);

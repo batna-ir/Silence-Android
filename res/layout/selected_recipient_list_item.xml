@@ -19,8 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/name"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:fontFamily="sans-serif-light" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <ImageButton
         android:id="@+id/delete"

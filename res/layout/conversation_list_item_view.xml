@@ -79,7 +79,6 @@
                 android:paddingRight="1dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="?attr/conversation_list_item_subject_color"
-                android:fontFamily="sans-serif-light"
                 android:singleLine="true"
                 tools:text="Wheels arrive at 3pm flat. This is a somewhat longer message."
                 android:ellipsize="end" />
@@ -112,7 +111,7 @@
                   android:layout_above="@id/subject"
                   android:textAppearance="?android:attr/textAppearanceSmall"
                   android:textColor="?attr/conversation_list_item_date_color"
-                  android:fontFamily="sans-serif-light"
+
                   tools:text="30 mins"
                   android:singleLine="true"/>
 

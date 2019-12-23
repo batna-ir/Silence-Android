@@ -16,6 +16,7 @@
  */
 package org.smssecure.smssecure;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -26,6 +27,8 @@ import org.smssecure.smssecure.crypto.MasterSecretUtil;
 import org.smssecure.smssecure.util.SilencePreferences;
 import org.smssecure.smssecure.util.VersionTracker;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 /**
  * Activity for creating a user's local encryption passphrase.
  *
@@ -35,6 +38,11 @@ import org.smssecure.smssecure.util.VersionTracker;
 public class PassphraseCreateActivity extends PassphraseActivity {
 
   public PassphraseCreateActivity() { }
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
 
   @Override
   public void onCreate(Bundle savedInstanceState) {

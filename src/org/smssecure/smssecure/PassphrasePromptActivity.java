@@ -16,6 +16,7 @@
  */
 package org.smssecure.smssecure;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -36,10 +37,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.smssecure.smssecure.crypto.InvalidPassphraseException;
+import org.smssecure.smssecure.crypto.MasterSecret;
 import org.smssecure.smssecure.crypto.MasterSecretUtil;
 import org.smssecure.smssecure.util.DynamicIntroTheme;
 import org.smssecure.smssecure.util.DynamicLanguage;
-import org.smssecure.smssecure.crypto.MasterSecret;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Activity that prompts for a user's passphrase.
@@ -52,6 +55,11 @@ public class PassphrasePromptActivity extends PassphraseActivity {
   private DynamicLanguage   dynamicLanguage = new DynamicLanguage();
 
   private EditText passphraseText;
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -123,7 +131,7 @@ public class PassphrasePromptActivity extends PassphraseActivity {
     passphraseText       = (EditText)    findViewById(R.id.passphrase_edit);
     SpannableString hint = new SpannableString("  " + getString(R.string.PassphrasePromptActivity_enter_passphrase));
     hint.setSpan(new RelativeSizeSpan(0.9f), 0, hint.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-    hint.setSpan(new TypefaceSpan("sans-serif"), 0, hint.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+    hint.setSpan(new TypefaceSpan("@font/shabnam"), 0, hint.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
     passphraseText.setHint(hint);
     okButton.setOnClickListener(new OkButtonClickListener());

@@ -1,6 +1,7 @@
 package org.smssecure.smssecure;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Ringtone;
@@ -39,6 +40,8 @@ import org.smssecure.smssecure.util.DynamicLanguage;
 import org.smssecure.smssecure.util.DynamicNoActionBarTheme;
 import org.smssecure.smssecure.util.DynamicTheme;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 @SuppressLint("StaticFieldLeak")
 public class RecipientPreferenceActivity extends PassphraseRequiredActionBarActivity implements Recipients.RecipientsModifiedListener
 {
@@ -59,6 +62,11 @@ public class RecipientPreferenceActivity extends PassphraseRequiredActionBarActi
   private Toolbar         toolbar;
   private TextView        title;
   private TextView        blockedIndicator;
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
 
   @Override
   public void onPreCreate() {

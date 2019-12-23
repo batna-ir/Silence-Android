@@ -1,6 +1,7 @@
 package org.smssecure.smssecure;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -16,9 +17,15 @@ import org.smssecure.smssecure.util.Rfc5724Uri;
 
 import java.net.URISyntaxException;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class SmsSendtoActivity extends Activity {
 
   private static final String TAG = SmsSendtoActivity.class.getSimpleName();
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

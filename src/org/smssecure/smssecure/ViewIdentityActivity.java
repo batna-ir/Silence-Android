@@ -16,14 +16,17 @@
  */
 package org.smssecure.smssecure;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.widget.TextView;
 
+import org.smssecure.smssecure.crypto.IdentityKeyParcelable;
 import org.smssecure.smssecure.crypto.MasterSecret;
 import org.smssecure.smssecure.util.Hex;
 import org.whispersystems.libsignal.IdentityKey;
-import org.smssecure.smssecure.crypto.IdentityKeyParcelable;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Activity for displaying an identity key.
@@ -37,7 +40,10 @@ public class ViewIdentityActivity extends KeyScanningActivity {
 
   private TextView    identityFingerprint;
   private IdentityKey identityKey;
-
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
   @Override
   protected void onCreate(Bundle state, @NonNull MasterSecret masterSecret) {
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);

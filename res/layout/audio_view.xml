@@ -81,7 +81,7 @@
               android:textAppearance="?android:attr/textAppearanceSmall"
               android:textColor="?conversation_item_sent_text_secondary_color"
               android:textSize="@dimen/conversation_item_date_text_size"
-              android:fontFamily="sans-serif-light"
+
               android:autoLink="none"
               android:visibility="gone"
               tools:text="00:15"

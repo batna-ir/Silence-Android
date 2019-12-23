@@ -1,5 +1,6 @@
 package org.smssecure.smssecure;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,8 @@ import org.smssecure.smssecure.crypto.MasterSecret;
 import org.smssecure.smssecure.recipients.Recipients;
 import org.smssecure.smssecure.util.DynamicLanguage;
 import org.smssecure.smssecure.util.DynamicTheme;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ConversationListArchiveActivity extends PassphraseRequiredActionBarActivity
     implements ConversationListFragment.ConversationSelectedListener
@@ -22,7 +25,10 @@ public class ConversationListArchiveActivity extends PassphraseRequiredActionBar
     dynamicTheme.onCreate(this);
     dynamicLanguage.onCreate(this);
   }
-
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
   @Override
   protected void onCreate(Bundle icicle, @NonNull MasterSecret masterSecret) {
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);

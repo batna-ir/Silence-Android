@@ -23,6 +23,8 @@ import org.smssecure.smssecure.database.SmsMigrator.ProgressDescription;
 import org.smssecure.smssecure.service.ApplicationMigrationService;
 import org.smssecure.smssecure.service.ApplicationMigrationService.ImportState;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class DatabaseMigrationActivity extends PassphraseRequiredActionBarActivity {
 
   private final ImportServiceConnection serviceConnection  = new ImportServiceConnection();
@@ -38,6 +40,11 @@ public class DatabaseMigrationActivity extends PassphraseRequiredActionBarActivi
 
   private ApplicationMigrationService importService;
   private boolean isVisible = false;
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
 
   @Override
   protected void onCreate(Bundle bundle, @NonNull MasterSecret masterSecret) {

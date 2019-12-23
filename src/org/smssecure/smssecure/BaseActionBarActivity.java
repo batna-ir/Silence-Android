@@ -1,5 +1,6 @@
 package org.smssecure.smssecure;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import org.smssecure.smssecure.util.SilencePreferences;
 import java.lang.reflect.Field;
 
 import saba.AppManager;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static org.smssecure.smssecure.ConversationListActivity.appCompatActivity;
 import static org.smssecure.smssecure.ConversationListActivity.globalContext;
@@ -26,6 +28,10 @@ import static org.smssecure.smssecure.ConversationListActivity.globalContext;
 public abstract class BaseActionBarActivity extends AppCompatActivity {
   private static final String TAG = BaseActionBarActivity.class.getSimpleName();
 
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     if (BaseActivity.isMenuWorkaroundRequired()) {

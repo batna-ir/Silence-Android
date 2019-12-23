@@ -18,7 +18,7 @@ package org.smssecure.smssecure;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -49,6 +49,8 @@ import org.smssecure.smssecure.video.VideoPlayer;
 
 import java.io.IOException;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 /**
  * Activity for displaying media attachments in-app
  */
@@ -73,6 +75,11 @@ public class MediaPreviewActivity extends PassphraseRequiredActionBarActivity im
   private long      threadId;
   private long      date;
   private long      size;
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
 
   @Override
   protected void onCreate(Bundle bundle, @NonNull MasterSecret masterSecret) {

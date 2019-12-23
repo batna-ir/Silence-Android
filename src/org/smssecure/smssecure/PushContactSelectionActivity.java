@@ -16,22 +16,18 @@
  */
 package org.smssecure.smssecure;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import org.smssecure.smssecure.crypto.MasterSecret;
-import org.smssecure.smssecure.util.DynamicLanguage;
-import org.smssecure.smssecure.util.DynamicNoActionBarTheme;
-import org.smssecure.smssecure.util.DynamicTheme;
-import org.smssecure.smssecure.util.SilencePreferences;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Activity container for selecting a list of contacts.
@@ -42,6 +38,11 @@ import java.util.List;
 public class PushContactSelectionActivity extends ContactSelectionActivity {
 
   private final static String TAG = PushContactSelectionActivity.class.getSimpleName();
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
 
   @Override
   protected void onCreate(Bundle icicle, @NonNull MasterSecret masterSecret) {

@@ -16,6 +16,7 @@
  */
 package org.smssecure.smssecure.preferences;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,8 @@ import org.smssecure.smssecure.crypto.MasterSecret;
 import org.smssecure.smssecure.util.DynamicLanguage;
 import org.smssecure.smssecure.util.DynamicTheme;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class MmsPreferencesActivity extends PassphraseRequiredActionBarActivity {
 
   private final DynamicTheme dynamicTheme       = new DynamicTheme();
@@ -39,6 +42,10 @@ public class MmsPreferencesActivity extends PassphraseRequiredActionBarActivity 
     dynamicLanguage.onCreate(this);
   }
 
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
   @Override
   protected void onCreate(Bundle icicle, @NonNull MasterSecret masterSecret) {
     this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);

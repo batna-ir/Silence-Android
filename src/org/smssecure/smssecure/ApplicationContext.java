@@ -17,11 +17,7 @@
 package org.smssecure.smssecure;
 
 import android.app.Application;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
-
-import android.support.v4.app.NotificationManagerCompat;
 
 import org.smssecure.smssecure.crypto.PRNGFixes;
 import org.smssecure.smssecure.dependencies.InjectableType;
@@ -30,16 +26,16 @@ import org.smssecure.smssecure.jobs.requirements.MasterSecretRequirementProvider
 import org.smssecure.smssecure.jobs.requirements.MediaNetworkRequirementProvider;
 import org.smssecure.smssecure.jobs.requirements.ServiceRequirementProvider;
 import org.smssecure.smssecure.notifications.NotificationChannels;
-import org.smssecure.smssecure.util.SilencePreferences;
 import org.whispersystems.jobqueue.JobManager;
 import org.whispersystems.jobqueue.dependencies.DependencyInjector;
 import org.whispersystems.jobqueue.requirements.NetworkRequirementProvider;
 import org.whispersystems.libsignal.logging.SignalProtocolLoggerProvider;
 import org.whispersystems.libsignal.util.AndroidSignalProtocolLogger;
 
-import java.security.Security;
-
 import dagger.ObjectGraph;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 /**
  * Will be called once when the Silence process is created.
@@ -61,13 +57,25 @@ public class ApplicationContext extends Application implements DependencyInjecto
   }
 
   @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
+
+  @Override
   public void onCreate() {
     super.onCreate();
     initializeRandomNumberFix();
     initializeLogging();
     initializeJobManager();
     NotificationChannels.create(this);
+    CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+            .setDefaultFontPath("fonts/shabnam.ttf")
+            .setFontAttrId(R.attr.fontPath)
+            .build()
+    );
   }
+
+
 
   @Override
   public void injectDependencies(Object object) {

@@ -1,6 +1,7 @@
 package org.smssecure.smssecure;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,12 +12,18 @@ import org.smssecure.smssecure.util.SilencePreferences;
 
 import info.guardianproject.GuardianProjectRSA4096;
 import info.guardianproject.trustedintents.TrustedIntents;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class PanicResponderActivity extends Activity {
 
   private static final String TAG = PanicResponderActivity.class.getSimpleName();
 
   public static final String PANIC_TRIGGER_ACTION = "info.guardianproject.panic.action.TRIGGER";
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

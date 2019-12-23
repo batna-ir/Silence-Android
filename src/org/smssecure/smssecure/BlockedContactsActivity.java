@@ -24,10 +24,17 @@ import org.smssecure.smssecure.recipients.Recipients;
 import org.smssecure.smssecure.util.DynamicLanguage;
 import org.smssecure.smssecure.util.DynamicTheme;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class BlockedContactsActivity extends PassphraseRequiredActionBarActivity {
 
   private final DynamicTheme    dynamicTheme    = new DynamicTheme();
   private final DynamicLanguage dynamicLanguage = new DynamicLanguage();
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
 
   @Override
   public void onPreCreate() {

@@ -43,8 +43,8 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -60,19 +60,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.protobuf.ByteString;
-
 import org.smssecure.smssecure.TransportOptions.OnTransportChangedListener;
 import org.smssecure.smssecure.audio.AudioSlidePlayer;
 import org.smssecure.smssecure.color.MaterialColor;
 import org.smssecure.smssecure.components.AnimatingToggle;
 import org.smssecure.smssecure.components.ComposeText;
-import org.smssecure.smssecure.components.KeyboardAwareLinearLayout;
+import org.smssecure.smssecure.components.InputAwareLayout;
 import org.smssecure.smssecure.components.KeyboardAwareLinearLayout.OnKeyboardShownListener;
 import org.smssecure.smssecure.components.SendButton;
-import org.smssecure.smssecure.components.InputAwareLayout;
-import org.smssecure.smssecure.components.emoji.EmojiDrawer.EmojiEventListener;
 import org.smssecure.smssecure.components.emoji.EmojiDrawer;
+import org.smssecure.smssecure.components.emoji.EmojiDrawer.EmojiEventListener;
 import org.smssecure.smssecure.components.emoji.EmojiToggle;
 import org.smssecure.smssecure.contacts.ContactAccessor;
 import org.smssecure.smssecure.contacts.ContactAccessor.ContactData;
@@ -108,25 +105,25 @@ import org.smssecure.smssecure.sms.MessageSender;
 import org.smssecure.smssecure.sms.OutgoingEncryptedMessage;
 import org.smssecure.smssecure.sms.OutgoingEndSessionMessage;
 import org.smssecure.smssecure.sms.OutgoingTextMessage;
-import org.smssecure.smssecure.util.concurrent.AssertedSuccessListener;
 import org.smssecure.smssecure.util.CharacterCalculator.CharacterState;
 import org.smssecure.smssecure.util.Dialogs;
 import org.smssecure.smssecure.util.DynamicLanguage;
 import org.smssecure.smssecure.util.DynamicTheme;
 import org.smssecure.smssecure.util.MediaUtil;
 import org.smssecure.smssecure.util.SilencePreferences;
-import org.smssecure.smssecure.util.views.Stub;
 import org.smssecure.smssecure.util.TelephonyUtil;
 import org.smssecure.smssecure.util.Util;
 import org.smssecure.smssecure.util.ViewUtil;
 import org.smssecure.smssecure.util.concurrent.ListenableFuture;
 import org.smssecure.smssecure.util.concurrent.SettableFuture;
 import org.smssecure.smssecure.util.dualsim.SubscriptionManagerCompat;
+import org.smssecure.smssecure.util.views.Stub;
 import org.whispersystems.libsignal.InvalidMessageException;
 import org.whispersystems.libsignal.util.guava.Optional;
 
-import java.io.IOException;
 import java.util.List;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static org.smssecure.smssecure.TransportOption.Type;
 
@@ -192,6 +189,10 @@ public class ConversationActivity extends PassphraseRequiredActionBarActivity
   private DynamicTheme    dynamicTheme    = new DynamicTheme();
   private DynamicLanguage dynamicLanguage = new DynamicLanguage();
 
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
   @Override
   protected void onPreCreate() {
     dynamicTheme.onCreate(this);

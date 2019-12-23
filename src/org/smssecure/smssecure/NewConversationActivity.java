@@ -16,16 +16,18 @@
  */
 package org.smssecure.smssecure;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import org.smssecure.smssecure.crypto.MasterSecret;
 import org.smssecure.smssecure.database.DatabaseFactory;
 import org.smssecure.smssecure.database.ThreadDatabase;
 import org.smssecure.smssecure.recipients.RecipientFactory;
 import org.smssecure.smssecure.recipients.Recipients;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Activity container for starting a list of contacts.
@@ -36,6 +38,11 @@ import org.smssecure.smssecure.recipients.Recipients;
 public class NewConversationActivity extends ContactSelectionActivity {
 
   private static final String TAG = NewConversationActivity.class.getSimpleName();
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
 
   @Override
   public void onCreate(Bundle bundle, MasterSecret masterSecret) {
