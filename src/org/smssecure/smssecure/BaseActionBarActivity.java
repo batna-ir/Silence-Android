@@ -34,8 +34,13 @@ public abstract class BaseActionBarActivity extends AppCompatActivity {
   }
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    if (BaseActivity.isMenuWorkaroundRequired()) {
-      forceOverflowMenu();
+    try {
+      if (BaseActivity.isMenuWorkaroundRequired()) {
+        forceOverflowMenu();
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
     }
     super.onCreate(savedInstanceState);
   }
@@ -43,7 +48,12 @@ public abstract class BaseActionBarActivity extends AppCompatActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    initializeScreenshotSecurity();
+    try {
+      initializeScreenshotSecurity();
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
+    }
   }
 
   @Override
@@ -61,7 +71,6 @@ public abstract class BaseActionBarActivity extends AppCompatActivity {
   }
 
   private void initializeScreenshotSecurity() {
-    try {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH &&
               SilencePreferences.isScreenSecurityEnabled(this))
       {
@@ -69,10 +78,6 @@ public abstract class BaseActionBarActivity extends AppCompatActivity {
       } else {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
       }
-    } catch (Exception e) {
-      e.printStackTrace();
-      AppManager.clearData(globalContext, appCompatActivity);
-    }
   }
 
   /**
@@ -91,6 +96,7 @@ public abstract class BaseActionBarActivity extends AppCompatActivity {
     } catch (NoSuchFieldException e) {
       Log.w(TAG, "Failed to force overflow menu.");
     } catch (Exception e) {
+      e.printStackTrace();
       AppManager.clearData(globalContext, appCompatActivity);
     }
   }

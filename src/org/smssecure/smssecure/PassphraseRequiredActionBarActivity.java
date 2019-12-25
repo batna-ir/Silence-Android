@@ -61,10 +61,15 @@ public abstract class PassphraseRequiredActionBarActivity extends BaseActionBarA
 
   @Override
   protected void onResume() {
-    Log.w(TAG, "onResume()");
-    super.onResume();
-    KeyCachingService.registerPassphraseActivityStarted(this);
-    isVisible = true;
+    try {
+      Log.w(TAG, "onResume()");
+      super.onResume();
+      KeyCachingService.registerPassphraseActivityStarted(this);
+      isVisible = true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
+    }
   }
 
   @Override

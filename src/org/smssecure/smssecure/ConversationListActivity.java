@@ -76,7 +76,12 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
 
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    try {
+      super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
+    }
   }
 
 
@@ -130,19 +135,24 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
-    MenuInflater inflater = this.getMenuInflater();
-    menu.clear();
+    try {
+      MenuInflater inflater = this.getMenuInflater();
+      menu.clear();
 
-    inflater.inflate(R.menu.text_secure_normal, menu);
+      inflater.inflate(R.menu.text_secure_normal, menu);
 
-    menu.findItem(R.id.menu_clear_passphrase).setVisible(!SilencePreferences.isPasswordDisabled(this));
+      menu.findItem(R.id.menu_clear_passphrase).setVisible(!SilencePreferences.isPasswordDisabled(this));
 
-    inflater.inflate(R.menu.conversation_list, menu);
-    MenuItem menuItem = menu.findItem(R.id.menu_search);
-    initializeSearch(menuItem);
+      inflater.inflate(R.menu.conversation_list, menu);
+      MenuItem menuItem = menu.findItem(R.id.menu_search);
+      initializeSearch(menuItem);
 
-    super.onPrepareOptionsMenu(menu);
-    return true;
+      super.onPrepareOptionsMenu(menu);
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
+    }
   }
 
   private void initializeSearch(MenuItem searchViewItem) {

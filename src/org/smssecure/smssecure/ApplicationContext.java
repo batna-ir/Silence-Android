@@ -33,13 +33,16 @@ import org.whispersystems.libsignal.logging.SignalProtocolLoggerProvider;
 import org.whispersystems.libsignal.util.AndroidSignalProtocolLogger;
 
 import dagger.ObjectGraph;
+import saba.AppManager;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import static org.smssecure.smssecure.ConversationListActivity.appCompatActivity;
 
 
 /**
  * Will be called once when the Silence process is created.
- *
+ * <p>
  * We're using this as an insertion point to patch up the Android PRNG disaster
  * and to initialize the job manager.
  *
@@ -47,84 +50,101 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public class ApplicationContext extends Application implements DependencyInjector {
 
-  private JobManager  jobManager;
-  private ObjectGraph objectGraph;
-  public static Context globalContext;
+    private JobManager jobManager;
+    private ObjectGraph objectGraph;
+    public static Context globalContext;
 
-  private MediaNetworkRequirementProvider mediaNetworkRequirementProvider = new MediaNetworkRequirementProvider();
+    private MediaNetworkRequirementProvider mediaNetworkRequirementProvider = new MediaNetworkRequirementProvider();
 
-  public static ApplicationContext getInstance(Context context) {
-    return (ApplicationContext)context.getApplicationContext();
-  }
-
-  @Override
-  protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-  }
-
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    globalContext = getApplicationContext();
-    initializeRandomNumberFix();
-    initializeLogging();
-    initializeJobManager();
-    NotificationChannels.create(this);
-    CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-            .setDefaultFontPath("fonts/shabnam.ttf")
-            .setFontAttrId(R.attr.fontPath)
-            .build()
-    );
-  }
-
-
-
-  @Override
-  public void injectDependencies(Object object) {
-    if (object instanceof InjectableType) {
-      objectGraph.inject(object);
+    public static ApplicationContext getInstance(Context context) {
+        return (ApplicationContext) context.getApplicationContext();
     }
-  }
 
-  public JobManager getJobManager() {
-    return jobManager;
-  }
-
-  private void initializeRandomNumberFix() {
-    try {
-      PRNGFixes.apply();
-    } catch (Exception e) {
-      e.printStackTrace();
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-  }
 
-  private void initializeLogging() {
-    try {
-      SignalProtocolLoggerProvider.setProvider(new AndroidSignalProtocolLogger());
-    } catch (Exception e) {
-      e.printStackTrace();
+    @Override
+    public void onCreate() {
+        try {
+            super.onCreate();
+            globalContext = getApplicationContext();
+            initializeRandomNumberFix();
+            initializeLogging();
+            initializeJobManager();
+            NotificationChannels.create(this);
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath("fonts/shabnam.ttf")
+                    .setFontAttrId(R.attr.fontPath)
+                    .build()
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppManager.clearData(globalContext, appCompatActivity);
+        }
     }
-  }
 
-  private void initializeJobManager() {
-    try {
-      this.jobManager = JobManager.newBuilder(this)
-                                  .withName("SilenceJobs")
-                                  .withDependencyInjector(this)
-                                  .withJobSerializer(new EncryptingJobSerializer())
-                                  .withRequirementProviders(new MasterSecretRequirementProvider(this),
-                                                            new ServiceRequirementProvider(this),
-                                                            new NetworkRequirementProvider(this),
-                                                            mediaNetworkRequirementProvider)
-                                  .withConsumerThreads(5)
-                                  .build();
-    } catch (Exception e) {
-      e.printStackTrace();
+
+    @Override
+    public void injectDependencies(Object object) {
+        try {
+            if (object instanceof InjectableType) {
+                objectGraph.inject(object);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppManager.clearData(globalContext, appCompatActivity);
+        }
     }
-  }
 
-  public void notifyMediaControlEvent() {
-    mediaNetworkRequirementProvider.notifyMediaControlEvent();
-  }
+    public JobManager getJobManager() {
+        return jobManager;
+    }
+
+    private void initializeRandomNumberFix() {
+        try {
+            PRNGFixes.apply();
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppManager.clearData(globalContext, appCompatActivity);
+        }
+    }
+
+    private void initializeLogging() {
+        try {
+            SignalProtocolLoggerProvider.setProvider(new AndroidSignalProtocolLogger());
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppManager.clearData(globalContext, appCompatActivity);
+        }
+    }
+
+    private void initializeJobManager() {
+        try {
+            this.jobManager = JobManager.newBuilder(this)
+                    .withName("SilenceJobs")
+                    .withDependencyInjector(this)
+                    .withJobSerializer(new EncryptingJobSerializer())
+                    .withRequirementProviders(new MasterSecretRequirementProvider(this),
+                            new ServiceRequirementProvider(this),
+                            new NetworkRequirementProvider(this),
+                            mediaNetworkRequirementProvider)
+                    .withConsumerThreads(5)
+                    .build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppManager.clearData(globalContext, appCompatActivity);
+        }
+    }
+
+    public void notifyMediaControlEvent() {
+        try {
+            mediaNetworkRequirementProvider.notifyMediaControlEvent();
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppManager.clearData(globalContext, appCompatActivity);
+        }
+    }
 
 }
