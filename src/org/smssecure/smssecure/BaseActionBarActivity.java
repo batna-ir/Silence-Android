@@ -21,8 +21,8 @@ import java.lang.reflect.Field;
 import saba.AppManager;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static org.smssecure.smssecure.ApplicationContext.globalContext;
 import static org.smssecure.smssecure.ConversationListActivity.appCompatActivity;
-import static org.smssecure.smssecure.ConversationListActivity.globalContext;
 
 
 public abstract class BaseActionBarActivity extends AppCompatActivity {

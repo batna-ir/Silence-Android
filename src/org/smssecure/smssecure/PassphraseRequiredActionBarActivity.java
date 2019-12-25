@@ -21,8 +21,8 @@ import java.util.Locale;
 
 import saba.AppManager;
 
+import static org.smssecure.smssecure.ApplicationContext.globalContext;
 import static org.smssecure.smssecure.ConversationListActivity.appCompatActivity;
-import static org.smssecure.smssecure.ConversationListActivity.globalContext;
 
 public abstract class PassphraseRequiredActionBarActivity extends BaseActionBarActivity implements MasterSecretListener {
   private static final String TAG = PassphraseRequiredActionBarActivity.class.getSimpleName();

@@ -17,7 +17,6 @@
 package org.smssecure.smssecure;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.os.AsyncTask;
@@ -47,6 +46,8 @@ import org.smssecure.smssecure.util.SilencePreferences;
 import saba.AppManager;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static org.smssecure.smssecure.ApplicationContext.globalContext;
+
 public class ConversationListActivity extends PassphraseRequiredActionBarActivity
     implements ConversationListFragment.ConversationSelectedListener
 {
@@ -58,7 +59,6 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
   private ConversationListFragment fragment;
   private ContentObserver observer;
   private MasterSecret masterSecret;
-  public static Context globalContext;
   public static AppCompatActivity appCompatActivity;
 
   @Override
@@ -69,6 +69,7 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
       dynamicLanguage.onCreate(this);
     } catch (Exception e) {
       e.printStackTrace();
+      AppManager.clearData(globalContext, appCompatActivity);
     }
   }
 
