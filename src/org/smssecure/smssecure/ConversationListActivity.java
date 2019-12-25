@@ -17,6 +17,7 @@
 package org.smssecure.smssecure;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.os.AsyncTask;
