@@ -35,8 +35,8 @@ public class AppManager {
                 Runtime runtime = Runtime.getRuntime();
                 runtime.exec("pm clear com.sabaos.secureSMS");
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception e1) {
+                e1.printStackTrace();
             }
         }
     }

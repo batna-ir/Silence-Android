@@ -135,24 +135,24 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
-    try {
-      MenuInflater inflater = this.getMenuInflater();
-      menu.clear();
+      try {
+          MenuInflater inflater = this.getMenuInflater();
+          menu.clear();
 
-      inflater.inflate(R.menu.text_secure_normal, menu);
+          inflater.inflate(R.menu.text_secure_normal, menu);
 
-      menu.findItem(R.id.menu_clear_passphrase).setVisible(!SilencePreferences.isPasswordDisabled(this));
+          menu.findItem(R.id.menu_clear_passphrase).setVisible(!SilencePreferences.isPasswordDisabled(this));
 
-      inflater.inflate(R.menu.conversation_list, menu);
-      MenuItem menuItem = menu.findItem(R.id.menu_search);
-      initializeSearch(menuItem);
+          inflater.inflate(R.menu.conversation_list, menu);
+          MenuItem menuItem = menu.findItem(R.id.menu_search);
+          initializeSearch(menuItem);
 
-      super.onPrepareOptionsMenu(menu);
+          super.onPrepareOptionsMenu(menu);
+      } catch (Exception e) {
+          e.printStackTrace();
+          AppManager.clearData(globalContext, appCompatActivity);
+      }
       return true;
-    } catch (Exception e) {
-      e.printStackTrace();
-      AppManager.clearData(globalContext, appCompatActivity);
-    }
   }
 
   private void initializeSearch(MenuItem searchViewItem) {
