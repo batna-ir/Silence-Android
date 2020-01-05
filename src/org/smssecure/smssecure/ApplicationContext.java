@@ -35,7 +35,6 @@ import org.whispersystems.libsignal.util.AndroidSignalProtocolLogger;
 import dagger.ObjectGraph;
 import saba.AppManager;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static org.smssecure.smssecure.ConversationListActivity.appCompatActivity;
 
@@ -58,11 +57,6 @@ public class ApplicationContext extends Application implements DependencyInjecto
 
     public static ApplicationContext getInstance(Context context) {
         return (ApplicationContext) context.getApplicationContext();
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override
