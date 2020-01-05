@@ -10,11 +10,13 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.2'
         classpath files('libs/gradle-witness.jar')
+        classpath 'io.sentry:sentry-android-gradle-plugin:1.7.27'
     }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'witness'
+apply plugin: 'io.sentry.android.gradle'
 
 repositories {
     maven {
@@ -110,6 +112,10 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
+
+    implementation 'io.sentry:sentry-android:1.7.27'
+    implementation 'org.slf4j:slf4j-nop:1.7.25'
+
 }
 
 dependencyVerification {

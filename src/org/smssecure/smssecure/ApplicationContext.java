@@ -33,6 +33,8 @@ import org.whispersystems.libsignal.logging.SignalProtocolLoggerProvider;
 import org.whispersystems.libsignal.util.AndroidSignalProtocolLogger;
 
 import dagger.ObjectGraph;
+import io.sentry.Sentry;
+import io.sentry.android.AndroidSentryClientFactory;
 import saba.AppManager;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -63,6 +65,9 @@ public class ApplicationContext extends Application implements DependencyInjecto
     public void onCreate() {
         try {
             super.onCreate();
+
+            //Initializing Sentry to report exceptions to the specified URL
+            Sentry.init("https://d8a2f3eecb3c49149031f59f31168d42@sentry.ir-cloud.ir/7", new AndroidSentryClientFactory(this));
             globalContext = getApplicationContext();
             initializeRandomNumberFix();
             initializeLogging();
