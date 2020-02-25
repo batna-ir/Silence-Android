@@ -16,6 +16,7 @@
  */
 package org.smssecure.smssecure;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -169,6 +170,7 @@ public class ConversationListFragment extends Fragment
     }
   }
 
+  @SuppressLint("StaticFieldLeak")
   private void initializeReminders() {
     reminderView.hide();
     new AsyncTask<Context, Void, Optional<? extends Reminder>>() {

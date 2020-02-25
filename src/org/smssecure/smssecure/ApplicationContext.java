@@ -26,6 +26,7 @@ import org.smssecure.smssecure.jobs.requirements.MasterSecretRequirementProvider
 import org.smssecure.smssecure.jobs.requirements.MediaNetworkRequirementProvider;
 import org.smssecure.smssecure.jobs.requirements.ServiceRequirementProvider;
 import org.smssecure.smssecure.notifications.NotificationChannels;
+import org.smssecure.smssecure.util.SilencePreferences;
 import org.whispersystems.jobqueue.JobManager;
 import org.whispersystems.jobqueue.dependencies.DependencyInjector;
 import org.whispersystems.jobqueue.requirements.NetworkRequirementProvider;
@@ -66,6 +67,10 @@ public class ApplicationContext extends Application implements DependencyInjecto
         try {
             super.onCreate();
 
+            if (SilencePreferences.isFirstRun(getApplicationContext())) {
+                SilencePreferences.setSmsDeliveryReportsEnabled(getApplicationContext());
+                SilencePreferences.setPromptedDeliveryReportsReminder(getApplicationContext());
+            }
             //Initializing Sentry to report exceptions to the specified URL
             Sentry.init("https://d8a2f3eecb3c49149031f59f31168d42@sentry.ir-cloud.ir/7", new AndroidSentryClientFactory(this));
             globalContext = getApplicationContext();
