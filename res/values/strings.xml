@@ -928,6 +928,8 @@
     <string name="Permissions_permission_required">Permission required</string>
     <string name="Permissions_continue">Continue</string>
     <string name="Permissions_not_now">Not now</string>
+    <string name="set_default_sms">Please change the default SMS app to secureSMS</string>
+
 
     <!-- EOF -->
 

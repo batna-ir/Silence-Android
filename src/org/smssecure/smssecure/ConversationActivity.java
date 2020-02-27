@@ -17,6 +17,7 @@
 package org.smssecure.smssecure;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -35,8 +36,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Browser;
 import android.provider.ContactsContract;
+import android.provider.Telephony;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.WindowCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -122,9 +125,11 @@ import org.whispersystems.libsignal.InvalidMessageException;
 import org.whispersystems.libsignal.util.guava.Optional;
 
 import java.util.List;
+import java.util.Objects;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static android.provider.Telephony.Sms.getDefaultSmsPackage;
 import static org.smssecure.smssecure.TransportOption.Type;
 
 /**
@@ -507,7 +512,14 @@ public class ConversationActivity extends PassphraseRequiredActionBarActivity
     startActivity(verifyIdentityIntent);
   }
 
+  @SuppressLint("StringFormatInvalid")
+  @RequiresApi(api = Build.VERSION_CODES.KITKAT)
   private void handleStartSecureSession() {
+    if (!Objects.equals(getDefaultSmsPackage(this), this.getPackageName())) {
+      Toast.makeText(this, getString(R.string.set_default_sms), Toast.LENGTH_LONG).show();
+      return;
+    }
+
     if (getRecipients() == null) {
       Toast.makeText(this, getString(R.string.ConversationActivity_invalid_recipient),
                      Toast.LENGTH_LONG).show();

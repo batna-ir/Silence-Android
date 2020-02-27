@@ -17,13 +17,17 @@
 package org.smssecure.smssecure;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.Telephony;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +36,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.smssecure.smssecure.crypto.MasterSecret;
 import org.smssecure.smssecure.database.DatabaseFactory;
@@ -43,6 +48,8 @@ import org.smssecure.smssecure.service.KeyCachingService;
 import org.smssecure.smssecure.util.DynamicLanguage;
 import org.smssecure.smssecure.util.DynamicTheme;
 import org.smssecure.smssecure.util.SilencePreferences;
+
+import java.util.Objects;
 
 import saba.AppManager;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -60,6 +67,7 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
   private ConversationListFragment fragment;
   private ContentObserver observer;
   private MasterSecret masterSecret;
+  @SuppressLint("StaticFieldLeak")
   public static AppCompatActivity appCompatActivity;
 
   @Override
@@ -85,13 +93,14 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
   }
 
 
+  @RequiresApi(api = Build.VERSION_CODES.KITKAT)
   @Override
   protected void onCreate(Bundle icicle, @NonNull MasterSecret masterSecret) {
     try {
       globalContext = getApplicationContext();
       appCompatActivity = this;
       this.masterSecret = masterSecret;
-      getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
+      Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
       getSupportActionBar().setTitle(R.string.app_name);
       fragment = initFragment(android.R.id.content, new ConversationListFragment(), masterSecret, dynamicLanguage.getCurrentLocale());
       initializeContactUpdatesReceiver();
@@ -286,6 +295,7 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
     }
   }
 
+  @SuppressLint("StaticFieldLeak")
   private void handleMarkAllRead() {
     new AsyncTask<Void, Void, Void>() {
       @Override

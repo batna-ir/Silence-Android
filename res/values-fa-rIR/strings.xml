@@ -759,5 +759,6 @@
   <string name="trimmer__old_messages_successfully_deleted">پیام های قدیمی با موفقیت پاک شدند</string>
   <!--transport_selection_list_item-->
   <string name="transport_selection_list_item__transport_icon">آیکون انتقال</string>
+  <string name="set_default_sms">لطفا برنامه پیش فرض را به پیامک امن تغییر دهید</string>
   <!--EOF-->
 </resources>
