@@ -34,6 +34,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Browser;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
@@ -391,6 +392,7 @@ public class ConversationActivity extends PassphraseRequiredActionBarActivity
     return true;
   }
 
+  @RequiresApi(api = Build.VERSION_CODES.KITKAT)
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     super.onOptionsItemSelected(item);
@@ -517,6 +519,16 @@ public class ConversationActivity extends PassphraseRequiredActionBarActivity
   private void handleStartSecureSession() {
     if (!Objects.equals(getDefaultSmsPackage(this), this.getPackageName())) {
       Toast.makeText(this, getString(R.string.set_default_sms), Toast.LENGTH_LONG).show();
+      final Handler Handler=new Handler();
+      Handler.postDelayed(new Runnable() {
+        @Override
+        public void run() {
+          SilencePreferences.setPromptedDefaultSmsProvider(getApplicationContext(), true);
+          Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+          intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, getApplicationContext().getPackageName());
+          getApplicationContext().startActivity(intent);
+        }
+      },1000);
       return;
     }
 
