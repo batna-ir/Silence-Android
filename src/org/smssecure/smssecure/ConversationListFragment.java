@@ -21,6 +21,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -33,6 +35,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -55,9 +58,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import org.smssecure.smssecure.ConversationListAdapter.ItemClickListener;
 import org.smssecure.smssecure.attachments.Attachment;
 import org.smssecure.smssecure.attachments.UriAttachment;
-import org.smssecure.smssecure.ConversationListAdapter.ItemClickListener;
 import org.smssecure.smssecure.components.reminder.DefaultSmsReminder;
 import org.smssecure.smssecure.components.reminder.DeliveryReportsReminder;
 import org.smssecure.smssecure.components.reminder.Reminder;
@@ -72,9 +75,9 @@ import org.smssecure.smssecure.database.DatabaseFactory;
 import org.smssecure.smssecure.database.DraftDatabase;
 import org.smssecure.smssecure.database.ThreadDatabase;
 import org.smssecure.smssecure.database.loaders.ConversationListLoader;
-import org.smssecure.smssecure.notifications.MessageNotifier;
 import org.smssecure.smssecure.mms.OutgoingMediaMessage;
 import org.smssecure.smssecure.mms.OutgoingSecureMediaMessage;
+import org.smssecure.smssecure.notifications.MessageNotifier;
 import org.smssecure.smssecure.recipients.Recipients;
 import org.smssecure.smssecure.sms.MessageSender;
 import org.smssecure.smssecure.sms.OutgoingEncryptedMessage;
@@ -85,8 +88,8 @@ import org.smssecure.smssecure.util.task.SnackbarAsyncTask;
 import org.whispersystems.libsignal.util.guava.Optional;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -174,11 +177,14 @@ public class ConversationListFragment extends Fragment
   private void initializeReminders() {
     reminderView.hide();
     new AsyncTask<Context, Void, Optional<? extends Reminder>>() {
+      @RequiresApi(api = Build.VERSION_CODES.KITKAT)
       @Override protected Optional<? extends Reminder> doInBackground(Context... params) {
         final Context context = params[0];
          if (DefaultSmsReminder.isEligible(context)) {
           return Optional.of(new DefaultSmsReminder(context));
-        } else if (Util.isDefaultSmsProvider(context) && SystemSmsImportReminder.isEligible(context)) {
+         } else if (Util.isDefaultSmsProvider(context)
+                 && SystemSmsImportReminder.isEligible(context)
+                 && !isSystemApplication(context, context.getPackageName())) {
           return Optional.of((new SystemSmsImportReminder(context, masterSecret)));
         } else if (DeliveryReportsReminder.isEligible(context)) {
           return Optional.of((new DeliveryReportsReminder(context)));
@@ -195,6 +201,24 @@ public class ConversationListFragment extends Fragment
         }
       }
     }.execute(getActivity());
+  }
+
+  public static boolean isSystemApplication(Context context, String packageName) {
+    if (context == null) {
+      return false;
+    }
+    PackageManager packageManager = context.getPackageManager();
+    if (packageManager == null || packageName == null || packageName.length() == 0) {
+      return false;
+    }
+
+    try {
+      ApplicationInfo app = packageManager.getApplicationInfo(packageName, 0);
+      return (app != null && (app.flags & ApplicationInfo.FLAG_SYSTEM) > 0);
+    } catch (PackageManager.NameNotFoundException e) {
+      e.printStackTrace();
+    }
+    return false;
   }
 
   private void initializeListAdapter() {
