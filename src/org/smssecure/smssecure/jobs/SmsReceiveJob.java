@@ -23,6 +23,8 @@ import org.whispersystems.libsignal.util.guava.Optional;
 import java.util.LinkedList;
 import java.util.List;
 
+import io.sentry.core.Sentry;
+
 public class SmsReceiveJob extends ContextJob {
 
   private static final long serialVersionUID = 1L;
@@ -52,19 +54,23 @@ public class SmsReceiveJob extends ContextJob {
     MasterSecret masterSecret = KeyCachingService.getMasterSecret(context);
     Optional<IncomingTextMessage> message = assembleMessageFragments(pdus, subscriptionId, masterSecret);
 
-    if (message.isPresent() && !isBlocked(message.get())) {
-      Pair<Long, Long> messageAndThreadId = storeMessage(message.get());
+    try {
+      if (message.isPresent() && !isBlocked(message.get())) {
+        Pair<Long, Long> messageAndThreadId = storeMessage(message.get());
 
-      IncomingTextMessage incomingTextMessage = message.get();
-      if (incomingTextMessage.isReceivedWhenLocked() ||
-         (!incomingTextMessage.isSecureMessage()     &&
-          !incomingTextMessage.isKeyExchange()       &&
-          !incomingTextMessage.isXmppExchange()))
-      {
-        MessageNotifier.updateNotification(context, masterSecret, messageAndThreadId.second);
+        IncomingTextMessage incomingTextMessage = message.get();
+        if (incomingTextMessage.isReceivedWhenLocked() ||
+                (!incomingTextMessage.isSecureMessage() &&
+                        !incomingTextMessage.isKeyExchange() &&
+                        !incomingTextMessage.isXmppExchange())) {
+          MessageNotifier.updateNotification(context, masterSecret, messageAndThreadId.second);
+        }
+      } else if (message.isPresent()) {
+        Log.w(TAG, "*** Received blocked SMS, ignoring...");
       }
-    } else if (message.isPresent()) {
-      Log.w(TAG, "*** Received blocked SMS, ignoring...");
+    } catch (Exception e) {
+      Log.w(TAG, "*** Failed to process received SMS, ignoring...");
+      Sentry.captureException(e);
     }
   }
 
