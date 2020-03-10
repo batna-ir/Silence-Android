@@ -68,7 +68,7 @@ public class SmsReceiveJob extends ContextJob {
       } else if (message.isPresent()) {
         Log.w(TAG, "*** Received blocked SMS, ignoring...");
       }
-    } catch (Exception e) {
+    } catch (Throwable e) {
       Log.w(TAG, "*** Failed to process received SMS, ignoring...");
       Sentry.captureException(e);
     }
