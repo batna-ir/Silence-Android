@@ -5,7 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
+
 
 public class CountrySelectionActivity extends BaseActivity
     implements CountrySelectionFragment.CountrySelectedListener
@@ -13,7 +14,7 @@ public class CountrySelectionActivity extends BaseActivity
 {
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
   @Override
   public void onCreate(Bundle bundle) {

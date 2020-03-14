@@ -34,9 +34,12 @@ import org.whispersystems.libsignal.logging.SignalProtocolLoggerProvider;
 import org.whispersystems.libsignal.util.AndroidSignalProtocolLogger;
 
 import dagger.ObjectGraph;
+import io.github.inflationx.calligraphy3.CalligraphyConfig;
+import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
+import io.github.inflationx.viewpump.ViewPump;
 import io.sentry.core.Sentry;
 import saba.AppManager;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 
 import static org.smssecure.smssecure.ConversationListActivity.appCompatActivity;
 
@@ -77,11 +80,20 @@ public class ApplicationContext extends Application implements DependencyInjecto
             initializeLogging();
             initializeJobManager();
             NotificationChannels.create(this);
-            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath("fonts/shabnam.ttf")
-                    .setFontAttrId(R.attr.fontPath)
-                    .build()
-            );
+
+            ViewPump.init(ViewPump.builder()
+                    .addInterceptor(new CalligraphyInterceptor(
+                            new CalligraphyConfig.Builder()
+                                    .setDefaultFontPath("fonts/shabnam.ttf")
+                                    .setFontAttrId(R.attr.fontPath)
+                                    .build()))
+                    .build());
+            //....
+
+
+
+
+
         } catch (Exception e) {
             e.printStackTrace();
             AppManager.clearData(globalContext, appCompatActivity);

@@ -9,7 +9,7 @@ import android.widget.Toast;
 import org.smssecure.smssecure.util.DynamicTheme;
 import org.whispersystems.libpastelog.SubmitLogFragment;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 /**
  * Activity for submitting logcat logs to a pastebin service.
@@ -20,7 +20,7 @@ public class LogSubmitActivity extends BaseActionBarActivity implements SubmitLo
   private DynamicTheme dynamicTheme = new DynamicTheme();
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
   @Override
   protected void onCreate(Bundle icicle) {

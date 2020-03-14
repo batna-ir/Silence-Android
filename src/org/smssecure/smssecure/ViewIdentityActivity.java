@@ -26,7 +26,8 @@ import org.smssecure.smssecure.crypto.MasterSecret;
 import org.smssecure.smssecure.util.Hex;
 import org.whispersystems.libsignal.IdentityKey;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
+
 
 /**
  * Activity for displaying an identity key.
@@ -42,7 +43,7 @@ public class ViewIdentityActivity extends KeyScanningActivity {
   private IdentityKey identityKey;
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
   @Override
   protected void onCreate(Bundle state, @NonNull MasterSecret masterSecret) {

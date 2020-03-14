@@ -51,8 +51,9 @@ import org.smssecure.smssecure.util.SilencePreferences;
 
 import java.util.Objects;
 
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import saba.AppManager;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 import static org.smssecure.smssecure.ApplicationContext.globalContext;
 
@@ -84,12 +85,7 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
 
   @Override
   protected void attachBaseContext(Context newBase) {
-    try {
-      super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    } catch (Exception e) {
-      e.printStackTrace();
-      AppManager.clearData(globalContext, appCompatActivity);
-    }
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
 
 

@@ -18,8 +18,8 @@ import org.smssecure.smssecure.util.SilencePreferences;
 
 import java.lang.reflect.Field;
 
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import saba.AppManager;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static org.smssecure.smssecure.ApplicationContext.globalContext;
 import static org.smssecure.smssecure.ConversationListActivity.appCompatActivity;
@@ -30,7 +30,7 @@ public abstract class BaseActionBarActivity extends AppCompatActivity {
 
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
   @Override
   protected void onCreate(Bundle savedInstanceState) {

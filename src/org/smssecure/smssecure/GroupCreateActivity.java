@@ -53,7 +53,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
+
 
 
 /**
@@ -93,7 +94,7 @@ public class GroupCreateActivity extends PassphraseRequiredActionBarActivity {
 
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
 
   @Override

@@ -17,7 +17,8 @@ import org.smssecure.smssecure.util.ServiceUtil;
 import org.smssecure.smssecure.util.SilencePreferences;
 import org.smssecure.smssecure.util.Util;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
+
 
 public class WelcomeActivity extends BaseActionBarActivity {
 
@@ -28,7 +29,7 @@ public class WelcomeActivity extends BaseActionBarActivity {
   private Context context;
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +81,7 @@ public class WelcomeActivity extends BaseActionBarActivity {
 
     Permissions.with(this)
                .request(Manifest.permission.READ_PHONE_STATE,
-                       Manifest.permission.READ_CONTACTS, //javad
+                       Manifest.permission.READ_CONTACTS,
                         Manifest.permission.RECEIVE_SMS,
                         Manifest.permission.RECEIVE_MMS)
                .ifNecessary()

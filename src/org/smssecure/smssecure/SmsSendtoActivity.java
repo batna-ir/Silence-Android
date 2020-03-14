@@ -17,14 +17,15 @@ import org.smssecure.smssecure.util.Rfc5724Uri;
 
 import java.net.URISyntaxException;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
+
 
 public class SmsSendtoActivity extends Activity {
 
   private static final String TAG = SmsSendtoActivity.class.getSimpleName();
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
 
   @Override

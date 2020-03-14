@@ -27,7 +27,7 @@ import org.smssecure.smssecure.crypto.MasterSecret;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 /**
  * Activity container for selecting a list of contacts.
@@ -41,7 +41,7 @@ public class PushContactSelectionActivity extends ContactSelectionActivity {
 
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
 
   @Override

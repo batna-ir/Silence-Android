@@ -20,7 +20,8 @@ import org.smssecure.smssecure.util.concurrent.ListenableFuture;
 
 import java.util.concurrent.ExecutionException;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
+
 
 public class ConversationPopupActivity extends ConversationActivity {
 
@@ -33,7 +34,7 @@ public class ConversationPopupActivity extends ConversationActivity {
   }
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
   @Override
   protected void onCreate(Bundle bundle, @NonNull MasterSecret masterSecret) {

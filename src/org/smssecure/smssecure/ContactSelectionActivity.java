@@ -36,7 +36,7 @@ import org.smssecure.smssecure.util.DynamicNoActionBarTheme;
 import org.smssecure.smssecure.util.DynamicTheme;
 import org.smssecure.smssecure.util.ServiceUtil;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 /**
  * Base activity container for selecting a list of contacts.
@@ -71,7 +71,7 @@ public abstract class ContactSelectionActivity extends PassphraseRequiredActionB
   }
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
   @Override
   protected void onCreate(Bundle icicle, MasterSecret masterSecret) {

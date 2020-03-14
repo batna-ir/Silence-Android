@@ -44,7 +44,8 @@ import org.smssecure.smssecure.util.ViewUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
+
 
 /**
  * An activity to quickly share content with contacts
@@ -78,7 +79,7 @@ public class ShareActivity extends PassphraseRequiredActionBarActivity
 
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
 
   @Override

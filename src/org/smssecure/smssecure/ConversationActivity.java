@@ -128,7 +128,8 @@ import org.whispersystems.libsignal.util.guava.Optional;
 import java.util.List;
 import java.util.Objects;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
+
 
 import static android.provider.Telephony.Sms.getDefaultSmsPackage;
 import static org.smssecure.smssecure.TransportOption.Type;
@@ -197,7 +198,7 @@ public class ConversationActivity extends PassphraseRequiredActionBarActivity
 
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
   @Override
   protected void onPreCreate() {

@@ -23,7 +23,7 @@ import org.smssecure.smssecure.database.SmsMigrator.ProgressDescription;
 import org.smssecure.smssecure.service.ApplicationMigrationService;
 import org.smssecure.smssecure.service.ApplicationMigrationService.ImportState;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 public class DatabaseMigrationActivity extends PassphraseRequiredActionBarActivity {
 
@@ -43,7 +43,7 @@ public class DatabaseMigrationActivity extends PassphraseRequiredActionBarActivi
 
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
 
   @Override

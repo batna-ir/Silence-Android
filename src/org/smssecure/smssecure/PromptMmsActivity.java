@@ -10,7 +10,8 @@ import android.widget.Button;
 import org.smssecure.smssecure.crypto.MasterSecret;
 import org.smssecure.smssecure.preferences.MmsPreferencesActivity;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
+
 
 public class PromptMmsActivity extends PassphraseRequiredActionBarActivity {
 
@@ -18,7 +19,7 @@ public class PromptMmsActivity extends PassphraseRequiredActionBarActivity {
   private Button cancelButton;
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
   @Override
   protected void onCreate(Bundle bundle, @NonNull MasterSecret masterSecret) {
