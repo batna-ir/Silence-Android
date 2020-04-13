@@ -130,8 +130,8 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        versionCode 9812191
-        versionName "Esfand98-A"
+        versionCode 9901231
+        versionName "Farvardin99-A"
 
         minSdkVersion 21
         targetSdkVersion 28
