@@ -16,29 +16,29 @@ public class AppManager {
 
     public static void clearData(Context context, AppCompatActivity appCompatActivity) {
 
-        try {
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(context, context.getString(R.string.reconfiguring_app), Toast.LENGTH_LONG).show();
-                }
-            });
-            deleteCache(context);
-            deletePref();
-            deleteDbs(context);
-            appCompatActivity.finish();
-            context.startActivity(new Intent(context, ConversationListActivity.class));
-        } catch (Exception e) {
-            e.printStackTrace();
-            try {
-                // clearing app data the hard way!
-                Runtime runtime = Runtime.getRuntime();
-                runtime.exec("pm clear com.sabaos.secureSMS");
-
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-        }
+//        try {
+//            new Handler().post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Toast.makeText(context, context.getString(R.string.reconfiguring_app), Toast.LENGTH_LONG).show();
+//                }
+//            });
+//            deleteCache(context);
+//            deletePref();
+//            deleteDbs(context);
+//            appCompatActivity.finish();
+//            context.startActivity(new Intent(context, ConversationListActivity.class));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            try {
+//                // clearing app data the hard way!
+//                Runtime runtime = Runtime.getRuntime();
+//                runtime.exec("pm clear com.sabaos.secureSMS");
+//
+//            } catch (Exception e1) {
+//                e1.printStackTrace();
+//            }
+//        }
     }
 
     private static void deleteCache(Context context) {
